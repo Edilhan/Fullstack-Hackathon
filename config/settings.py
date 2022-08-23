@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-1nxzwz2v7ct!_h-4d$afc6-@hbhz0k3scmr3n9evr@023)2psh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['autoshop-top.herokuapp.com/', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
