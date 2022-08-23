@@ -41,6 +41,9 @@ INSTALLED_APPS = [
 
     'rest_framework_simplejwt',
     'drf_yasg',
+
+    'account',
+    'autoshop',
 ]
 
 MIDDLEWARE = [
@@ -107,6 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'account.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -158,6 +162,14 @@ SWAGGER_SETTINGS = {
         }
     }
 }
+
+CORS_ALLOW_ORIGINS = [
+    'http://localhost:3000',
+    'http://localhost:3001', 
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:3001', 
+    'https://www.thunderclient.com',
+]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
 EMAIL_HOST = 'smtp.gmail.com'
