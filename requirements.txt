@@ -5,3 +5,7 @@ djangorestframework-simplejwt
 pillow
 drf-yasg
 python-decouple
+gunicorn
+whitenoise
+dj-database-url
+django-cors-headers
