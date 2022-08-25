@@ -1,11 +1,15 @@
+from urllib import response
 from django.shortcuts import redirect
 from django.contrib.auth import get_user_model
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.generics import get_object_or_404
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authtoken.models import Token
 
-from .serializers import RegisterSerializer
+from .serializers import RegisterSerializer, LoginSerializer
 
 User = get_user_model()
 
@@ -24,3 +28,15 @@ def activate(request, activation_code):
     user.activation_code = ''
     user.save()
     return redirect("http://127.0.0.1:3000/")
+
+class LoginView(ObtainAuthToken):
+    serializer_class = LoginSerializer
+
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated, ]
+
+    def post(self, request):
+        user = request.user
+        Token.objects.filter(user=user).delete()
+        return Response('Successfully logged out', 200)
+        

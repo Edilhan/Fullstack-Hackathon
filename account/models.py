@@ -75,4 +75,4 @@ class User(AbstractBaseUser):
         self.generate_activation_code()
         activation_url = f'http://127.0.0.1:8000/account/activate/{self.activation_code}/'
         message = f'Activate your account, following this link {activation_url}'
-        send_mail("Activate account", message, "shop@gmail.com", [self.email])
+        send_mail("Activate account", message, "autoshop@gmail.com", [self.email])
