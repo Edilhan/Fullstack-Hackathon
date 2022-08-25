@@ -23,7 +23,7 @@ from drf_yasg.views import get_schema_view
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Hotel 21 API",
+        title="Autoshop 21 API",
         description="...",
         default_version="v1",
     ),
@@ -32,6 +32,9 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('account/', include('account.urls')),
+    path('autoshop/', include('autoshop.urls')),
+    path('docs/', schema_view.with_ui("swagger"))
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

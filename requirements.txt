@@ -5,4 +5,11 @@ djangorestframework-simplejwt
 pillow
 drf-yasg
 python-decouple
+<<<<<<< HEAD
 pyTelegramBotAPI
+=======
+gunicorn
+whitenoise
+dj-database-url
+django-cors-headers
+>>>>>>> dee3e6794580d358ce2e8e276a528cd50661a79d
