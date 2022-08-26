@@ -27,7 +27,7 @@ def activate(request, activation_code):
     user.is_active = True
     user.activation_code = ''
     user.save()
-    return redirect("http://127.0.0.1:3000/")
+    return redirect("https://autoshop-top.herokuapp.com/")
 
 class LoginView(ObtainAuthToken):
     serializer_class = LoginSerializer
@@ -39,4 +39,3 @@ class LogoutView(APIView):
         user = request.user
         Token.objects.filter(user=user).delete()
         return Response('Successfully logged out', 200)
-        
