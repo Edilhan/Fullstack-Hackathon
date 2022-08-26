@@ -6,7 +6,7 @@ from .views import LoginView, LogoutView, RegisterAPIView, activate
 
 urlpatterns = [
     path('register/', RegisterAPIView.as_view()),
-    path('activate/<str:activation_code>/', activate),
+    path('activate/<str:activation_code>/', activate()),
     path('api/token/', TokenObtainPairView.as_view()),
     path('api/token/refresh/', TokenRefreshView.as_view()),
     path('login/', LoginView.as_view()),
