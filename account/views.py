@@ -32,7 +32,7 @@ def activate(request, activation_code):
     user.is_active = True
     user.activation_code = ''
     user.save()
-    return redirect("http://127.0.0.1:3000")
+    return redirect("http://127.0.0.1:3000/")
 
 class LoginView(TokenObtainPairView):
     serializer_class = LoginSerializer
