@@ -3,6 +3,8 @@ from urllib import request
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
 User = get_user_model()
 
@@ -36,23 +38,40 @@ class RegisterSerializer(serializers.ModelSerializer):
         print('CREATING USER WITH DATA:', validated_data)
         return User.objects.create_user(**validated_data)
 
-class LoginSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-    password = serializers.CharField(label='Password', style={'input_type':'password'}, trim_whitespace=False)
+class LoginSerializer(TokenObtainPairSerializer):
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(required=True, min_length=8)
+
+    def validate_email(self, email):
+        if not User.objects.filter(email=email).exists():
+            raise serializers.ValidationError('Email does not exist')
+        return email
+
+    def validate (self, attrs):
+        email = attrs.get('email')
+        password = attrs.pop('password')
+        user = User.objects.get(email=email)
+        if not user.check_password(password):
+            raise serializers.ValidationError('invalid password')
+        if user and user.is_active:
+            refresh = self.get_token(user)
+            attrs['refresh']=str(refresh)
+            attrs['access']=str(refresh.access_token)
+        return attrs
+
+class LogoutSerializer(serializers.Serializer):
+    refresh = serializers.CharField()
+
+    default_error_message = {
+        'bad_token': ('Token is expired or invalid')
+    }
 
     def validate(self, attrs):
-        email = attrs.get('email')
-        password = attrs.get('password')
-
-        if email and password:
-            user = authenticate(request=self.context.get('request'), email=email, password=password)
-            if not user:
-                message = 'Unable to log in with provided info'
-                raise serializers.ValidationError(message, code='authorization')
-
-        else:
-            message = 'Must include "email" and "password"'
-            raise serializers.ValidationError(message, code='authorization')
-        
-        attrs['user'] = user
+        self.token = attrs['refresh']
         return attrs
+
+    def save(self, **kwargs):
+        try:
+            RefreshToken(self.token).blacklist()
+        except TokenError:
+            self.fail('bad_token')
