@@ -19,12 +19,12 @@ User = get_user_model()
 
 class RegisterAPIView(APIView):
 
-    @swagger_auto_schema(request_body=RegisterSerializer())
+    # @swagger_auto_schema(request_body=RegisterSerializer())
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-            return Response("Вы успешно зарегистрировались!")
+            return Response("Вы успешно зарегистрировались!", 201)
 
 @api_view(["GET"])
 def activate(request, activation_code):

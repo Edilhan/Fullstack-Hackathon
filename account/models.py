@@ -5,7 +5,7 @@ from django.db import models
 class UserManager(BaseUserManager):
     use_in_migrations = True
 
-    def create_user(self, email,  first_name, last_name, password):
+    def create_user(self, email,  first_name, last_name, password, **extra_fields):
         if not email:
             raise ValueError("Email is required")
         if not first_name:
@@ -21,7 +21,7 @@ class UserManager(BaseUserManager):
         return user
     
     
-    def create_superuser(self, email, first_name, last_name, password):
+    def create_superuser(self, email, first_name, last_name, password, **extra_fields):
         email = self.normalize_email(email)
         user = self.model(email=email, first_name=first_name, last_name=last_name)
         user.set_password(password)
