@@ -30,6 +30,8 @@ class CategoryViewSet(mixins.CreateModelMixin,
 class CommentViewSet(mixins.CreateModelMixin,
                     mixins.UpdateModelMixin,
                     mixins.DestroyModelMixin,
+                    mixins.ListModelMixin,
+                    mixins.RetrieveModelMixin,
                     GenericViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
