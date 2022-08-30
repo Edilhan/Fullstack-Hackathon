@@ -5,6 +5,7 @@ djangorestframework-simplejwt
 pillow
 drf-yasg
 python-decouple
+pyTelegramBotAPI
 gunicorn
 whitenoise
 dj-database-url
