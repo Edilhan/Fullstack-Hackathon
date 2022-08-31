@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
-
+# from .tasks import send_activation_code
 
 class UserManager(BaseUserManager):
     use_in_migrations = True

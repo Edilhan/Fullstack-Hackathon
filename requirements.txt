@@ -10,3 +10,5 @@ gunicorn
 whitenoise
 dj-database-url
 django-cors-headers
+celery
+rabbitmq
